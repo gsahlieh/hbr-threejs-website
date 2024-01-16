@@ -29,6 +29,11 @@ export default function OpeningScene() {
 
   return (
     <Canvas
+      //   onCreated={({ gl }) => {
+      //     gl.domElement.addEventListener("wheel", (e) => e.preventDefault(), {
+      //       passive: false,
+      //     });
+      //   }}
       shadows="basic"
       camera={{ position: [position.x, position.y, position.z], fov: 55 }}
       style={{ height: "90vh" }}
@@ -39,23 +44,23 @@ export default function OpeningScene() {
           position: "absolute",
           top: "20px",
           left: "50%",
-          transform: "translateX(-50%) translateY(-400%)",
+          transform: "translateX(-50%) translateY(-340%)",
           fontSize: "70px",
         }}
       >
-        <p className="whitespace-nowrap">Where Excellence meets Execution</p>
+        <h1 className="whitespace-nowrap">Where Excellence meets Execution</h1>
       </Html>
 
       <pointLight position={[10, -10, -20]} intensity={10} />
       <pointLight position={[-10, -10, -20]} intensity={10} />
       <Model position={[0, -5.5, 3]} rotation={[0, -0.2, 0]} />
       <SoftShadows samples={3} />
-      <CameraControls
+      {/* <CameraControls
         minPolarAngle={0}
         maxPolarAngle={Math.PI / 2}
         minAzimuthAngle={-Math.PI / 2}
         maxAzimuthAngle={Math.PI / 2}
-      />
+      /> */}
     </Canvas>
   );
 }

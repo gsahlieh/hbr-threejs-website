@@ -135,12 +135,14 @@ const WhoWeAre = () => {
   return (
     <div className="flex flex-row items-center">
       <div className="flex flex-col space-y-3 md:w-1/2">
-        <h1 className="text-6xl">Who We Are</h1>
+        <h1 className="text-6xl">Welcome To Hills Bathroom Renovations</h1>
         <p className="text-xl">
-          Our team is made up of a diverse group of individuals who are
-          passionate about what they do. We come from all walks of life and have
-          a wide range of experiences. We are united by our desire to make a
-          difference in the world.
+          Hills Bathroom Renovations is the bathroom renovations team that you
+          can rely on to fully transform your bathroom. We have been Bathroom
+          Remodelling in the North West Sydney for more than 15 years,
+          renovating all sorts of bathrooms throughout the Hills area and
+          Northern West Sydney. Our commitment to high -quality, professional
+          work means that you will get the results that you will be amazed with.
         </p>
       </div>
       <div className="md:w-1/2">
