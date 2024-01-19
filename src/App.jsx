@@ -1,21 +1,34 @@
+import { Canvas } from "@react-three/fiber";
+import Experience from "./components/Experience";
 import Navbar from "./components/Navbar";
-import OpeningScene from "./components/OpeningScene";
-import WhoWeAre from "./components/WhoWeAre";
-import PreviousWorks from "./components/PreviousWorks";
-import Reviews from "./components/Reviews";
-import Contact from "./components/Contact";
+import { useEffect, useState } from "react";
 
 function App() {
+  const [fov, setFov] = useState(45);
+
+  useEffect(() => {
+    const width = window.innerWidth;
+
+    if (width >= 1200) {
+      // Desktop
+      setFov(75);
+    } else if (width >= 768 && width < 1200) {
+      // Tablet
+      setFov(90);
+    } else if (width < 768) {
+      // Mobile
+      setFov(120);
+    }
+  }, []);
+
   return (
     <>
-      <div className="max-w-screen-lg mx-auto min-h-screen flex flex-col ">
+      <header>
         <Navbar />
-        <OpeningScene />
-        <WhoWeAre />
-        <PreviousWorks />
-        <Reviews />
-        <Contact />
-      </div>
+      </header>
+      <Canvas camera={{ fov: fov }}>
+        <Experience />
+      </Canvas>
     </>
   );
 }

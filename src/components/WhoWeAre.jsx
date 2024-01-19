@@ -1,6 +1,6 @@
 import React, { useRef, useMemo } from "react";
 import { Canvas, useFrame, extend, useThree } from "@react-three/fiber";
-import { shaderMaterial } from "@react-three/drei";
+import { Scroll, shaderMaterial } from "@react-three/drei";
 import { useControls } from "leva";
 import * as THREE from "three";
 import blobVertexShader from "./shaders/blob/vertex.glsl";
@@ -28,7 +28,8 @@ const BlobMaterial = shaderMaterial(
 
 extend({ BlobMaterial });
 
-const Sphere = () => {
+const Sphere = (props) => {
+  const { viewport } = useThree();
   const sphere = useRef();
   const blobMaterial = useMemo(
     () =>
@@ -49,7 +50,6 @@ const Sphere = () => {
       }),
     []
   );
-  const { viewport } = useThree();
   const {
     size,
     displace,
@@ -106,6 +106,21 @@ const Sphere = () => {
     redhell: true,
   });
 
+  // const { scale, position } = useControls("sphere", {
+  //   scale: {
+  //     // Scale was scale={Math.max(viewport.width, viewport.height) / 8}
+  //     value: 1,
+  //     step: 0.01,
+  //     min: 0,
+  //     max: 5,
+  //   },
+  //   position: {
+  //     value: { x: 3, y: -7.6, z: 0 },
+  //     step: 0.01,
+  //     joystick: "orbit",
+  //   },
+  // });
+
   useFrame(({ clock }) => {
     sphere.current.material.uniforms.time.value = clock.getElapsedTime();
     sphere.current.material.uniforms.size.value = size;
@@ -118,13 +133,18 @@ const Sphere = () => {
     sphere.current.material.uniforms.bcolor.value = bcolor;
     sphere.current.material.uniforms.fragment.value = fragment;
     sphere.current.material.uniforms.redhell.value = redhell;
+
+    // sphere.current.scale.set(scale, scale, scale);
+    // sphere.current.position.set(position.x, position.y, position.z);
   });
 
   return (
     <mesh
       ref={sphere}
+      // scale={[scale, scale, scale]}
+      // position={position}
+      {...props}
       material={blobMaterial}
-      scale={Math.max(viewport.width, viewport.height) / 8}
     >
       <sphereGeometry args={[1, 100, 100]} />
     </mesh>
@@ -133,29 +153,9 @@ const Sphere = () => {
 
 const WhoWeAre = () => {
   return (
-    <div className="flex flex-row items-center">
-      <div className="flex flex-col space-y-3 md:w-1/2">
-        <h1 className="text-6xl">Welcome To Hills Bathroom Renovations</h1>
-        <p className="text-xl">
-          Hills Bathroom Renovations is the bathroom renovations team that you
-          can rely on to fully transform your bathroom. We have been Bathroom
-          Remodelling in the North West Sydney for more than 15 years,
-          renovating all sorts of bathrooms throughout the Hills area and
-          Northern West Sydney. Our commitment to high -quality, professional
-          work means that you will get the results that you will be amazed with.
-        </p>
-      </div>
-      <div className="md:w-1/2">
-        <Canvas
-          camera={{ position: [0, 0, 40], fov: 15 }}
-          style={{ height: "90vh" }}
-        >
-          <ambientLight />
-          <pointLight position={[10, 10, 10]} />
-          <Sphere />
-        </Canvas>
-      </div>
-    </div>
+    <>
+      <Sphere position={[3, -7.6, 0]} scale={1} />
+    </>
   );
 };
 
