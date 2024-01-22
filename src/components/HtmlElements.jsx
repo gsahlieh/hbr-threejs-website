@@ -10,7 +10,7 @@ export default function HtmlElements() {
       {/* Opening Scene */}
 
       {/* Who we are */}
-      <div className="absolute flex flex-col  top-[100vh] w-[50vw]">
+      {/* <div className="absolute flex flex-col  top-[100vh] w-[50vw]">
         <div className="flex flex-col items-center justify-center ml-16 my-12 absolute top-[30vh] space-y-5">
           <h1 className="text-6xl">Welcome To Hills Bathroom Renovations</h1>
           <p className="text-xl">
@@ -23,23 +23,23 @@ export default function HtmlElements() {
             with.
           </p>
         </div>
-      </div>
+      </div> */}
 
       {/* Previous Works */}
 
       {/* Reviews */}
-      <div className="absolute flex flex-col top-[200vh] w-[100vw] h-[100vh]">
+      {/* <div className="absolute flex flex-col top-[200vh] w-[100vw] h-[100vh]">
         <div className="flex flex-col items-center justify-center mt-72">
           <h1 className="whitespace-nowrap text-7xl">What people are saying</h1>
         </div>
-      </div>
+      </div> */}
 
       {/* Contact */}
-      <div className="absolute flex flex-col top-[300vh] w-[100vw] h-[100vh]">
+      {/* <div className="absolute flex flex-col top-[300vh] w-[100vw] h-[100vh]">
         <div className="flex flex-col items-center justify-center m-auto p-12 rounded-2xl border">
           <ContactForm />
         </div>
-      </div>
+      </div> */}
     </Scroll>
   );
 }

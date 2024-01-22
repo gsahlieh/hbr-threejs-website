@@ -1,119 +1,97 @@
-import React, { useRef, useEffect } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
-import { Html, useGLTF, Text } from "@react-three/drei";
-import * as THREE from "three";
+import { useGLTF, useScroll } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 import { useControls } from "leva";
+import React, { useRef, useLayoutEffect } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 export default function Sink() {
   const group = useRef();
   const sinkRef = useRef();
-  const sink = useGLTF("sink-only-test.glb");
+  const tl = useRef();
+  const scroll = useScroll();
+  const sink = useGLTF("shower-head.glb");
 
-  const { position, scale } = useControls("sink", {
-    position: {
-      value: { x: 0, y: 0, z: 0 },
-      step: 0.01,
-      joystick: "invertY",
-    },
-    scale: {
-      value: 1,
-      min: 0,
-      max: 5,
-    },
+  useFrame((state, delta) => {
+    if (sinkRef.current) {
+      if (scroll.offset < 0.5) {
+        sinkRef.current.rotation.y += delta * 1;
+      } else {
+        // tl.current.seek(scroll.offset * tl.current.duration());
+        // sinkRef.current.rotation.set(rotation.x, rotation.y, rotation.z);
+      }
+
+      // sinkRef.current.position.set(position.x, position.y, position.z);
+      // sinkRef.current.scale.set(scale, scale, scale);
+    }
   });
 
-  // useEffect(() => {
-  //   if (scene) {
-  //     // Calculate the bounding box of the entire scene
-  //     scene.traverse((child) => {
-  //       if (child.isMesh) {
-  //         child.geometry.computeBoundingBox();
-  //       }
-  //     });
+  // useLayoutEffect(() => {
+  //   tl.current = gsap.timeline();
 
-  //     // Calculate the center of the bounding box
-  //     const boundingBox = new THREE.Box3().setFromObject(scene);
-  //     const center = boundingBox.getCenter(new THREE.Vector3());
-
-  //     // Move the scene's position to center it
-  //     scene.position.x += scene.position.x - center.x;
-  //     scene.position.y += scene.position.y - center.y;
-  //     scene.position.z += scene.position.z - center.z;
+  //   if (sinkRef.current && tl.current) {
+  //     tl.current
+  //       .to(sinkRef.current.rotation, {
+  //         x: 0.36,
+  //         y: 1.5,
+  //         z: 0,
+  //         duration: 3,
+  //         scrollTrigger: {
+  //           trigger: ".trigger",
+  //           start: "top 50%",
+  //           end: "bottom 50%",
+  //           scrub: 1,
+  //         },
+  //       })
+  //       .to(sinkRef.current.position, {
+  //         x: -2.64,
+  //         y: 0.1,
+  //         z: -1.62,
+  //         duration: 3,
+  //         scrollTrigger: {
+  //           trigger: ".trigger",
+  //           start: "top 50%",
+  //           end: "bottom 50%",
+  //           scrub: 1,
+  //         },
+  //       })
+  //       .to(sinkRef.current.scale, {
+  //         x: 3.4,
+  //         y: 3.4,
+  //         z: 3.4,
+  //         duration: 3,
+  //         scrollTrigger: {
+  //           trigger: ".trigger",
+  //           start: "top 50%",
+  //           end: "bottom 50%",
+  //           scrub: 1,
+  //         },
+  //       });
   //   }
-  // }, [scene]);
-
-  useFrame((state) => {
-    sinkRef.current.rotation.y += 0.01;
-
-    sinkRef.current.position.set(position.x, position.y, position.z);
-    sinkRef.current.scale.set(scale, scale, scale);
-  });
+  // }, []);
 
   return (
     <>
-      <group ref={group}>
-        {/* BLUR */}
-        <Text
-          position={[0, 0, 2]}
-          color="#ffffff"
-          fillOpacity={0}
-          font="roboto-v30-latin-900.woff"
-          fontWeight="bold"
-          outlineBlur={0.05}
-          outlineColor={"#ffffff"}
-          fontSize={0.75}
-          textAlign={"center"}
-        >
-          {/* <div
-            // ref={textBehindBlur}
-            className="absolute text-center text-white text-9xl font-bold blur"
-          > */}
-          {"HILLS\nBATHROOMS"}
-          {/* </div> */}
-        </Text>
-        {/* SOLID */}
-        <Text
-          position={[0, 0, 2]}
-          opacity={0}
-          outlineColor={"#ffffff"}
-          color="#ffffff"
-          font="roboto-v30-latin-900.woff"
-          fontWeight="bold"
-          fontSize={0.75}
-          textAlign={"center"}
-          // outlineBlur={0.01}
-        >
-          {/* <div
-            // ref={textBehindBlur}
-            className="absolute text-center text-white text-9xl font-bold blur"
-          > */}
-          {"HILLS\nBATHROOMS"}
-          {/* </div> */}
-        </Text>
-        {/* OUTLINE */}
-        <Text
-          position={[0, 0, 3]}
-          fillOpacity={0}
-          strokeColor={"#ffffff"}
-          strokeWidth={0.01}
-          font="roboto-v30-latin-900.woff"
-          fontWeight="bold"
-          fontSize={0.5}
-          textAlign={"center"}
-          // outlineBlur={0.01}
-        >
-          {/* <div
-            // ref={textBehindBlur}
-            className="absolute text-center text-white text-9xl font-bold blur"
-          > */}
-          {"HILLS\nBATHROOMS"}
-          {/* </div> */}
-        </Text>
+      <group
+        ref={group}
+        fallback={
+          <mesh>
+            <boxBufferGeometry />
+            <meshStandardMaterial />
+          </mesh>
+        }
+      >
         <primitive
           ref={sinkRef}
           object={sink.scene}
-          scale={scale}
-          position={position}
+          // scale={scale}
+          // position={position}
+          // rotation={rotation}
+          scale={3.4}
+          position={[0, 0, 2.52]}
+          rotation={[0, 0, 0]}
         />
       </group>
     </>

@@ -21,6 +21,7 @@ import {
 import * as THREE from "three";
 import { useControls } from "leva";
 import Sink from "./Sink";
+import OpeningSceneText from "./OpeningSceneText";
 
 export default function Experience() {
   const rectAreaLightRef = useRef();
@@ -88,7 +89,7 @@ export default function Experience() {
       <SoftShadows samples={3} />
 
       <Environment preset="city" blur={0.4} />
-      <OrbitControls enableZoom={true} />
+      {/* <OrbitControls enableZoom={false} /> */}
 
       {/* Laptop */}
       {/* <rectAreaLight ref={rectAreaLightRef} color={0xffffff} /> */}
@@ -101,12 +102,14 @@ export default function Experience() {
         position={[0, -9, 0]}
       /> */}
 
-      <ScrollControls pages={3} damping={0.25}>
+      <ScrollControls pages={2} damping={0.25}>
         <HtmlElements />
-        <Sink />
-        {/* <BathroomScene /> */}
+        {/* <Sink /> */}
+        <BathroomScene />
 
         <Scroll>
+          <OpeningSceneText />
+
           {/* <WhoWeAre /> */}
           {/* <PreviousWorks /> */}
           {/* <Laptop /> */}
