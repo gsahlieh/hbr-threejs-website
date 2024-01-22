@@ -1,20 +1,13 @@
 import { Scroll } from "@react-three/drei";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import ContactForm from "./ContactForm";
 
 export default function HtmlElements() {
   const [width, setWidth] = React.useState(window.innerWidth);
 
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
-
   return (
     <Scroll html style={{ width: "100%" }}>
       {/* Opening Scene */}
-      <div className="relative text-center top-[20vh] whitespace-nowrap">
-        <h1 className="text-6xl">{width}</h1>
-      </div>
 
       {/* Who we are */}
       <div className="absolute flex flex-col  top-[100vh] w-[50vw]">

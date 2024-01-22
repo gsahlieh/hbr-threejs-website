@@ -53,3 +53,16 @@ body {
   border-radius: 20px;
   background: #000000;
 }
+
+/* For OpeningScene */
+.text-9xl {
+  font-size: 9rem;
+}
+
+.blur {
+  filter: blur(7.5px);
+}
+
+.stroke-white {
+  -webkit-text-stroke: 2px white;
+}

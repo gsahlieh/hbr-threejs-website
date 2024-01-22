@@ -20,6 +20,7 @@ import {
 } from "@react-three/drei";
 import * as THREE from "three";
 import { useControls } from "leva";
+import Sink from "./Sink";
 
 export default function Experience() {
   const rectAreaLightRef = useRef();
@@ -83,18 +84,10 @@ export default function Experience() {
 
       {/* <pointLight position={[10, -10, -20]} intensity={10} />
       <pointLight position={[-10, -10, -20]} intensity={10} /> */}
-      {/* <ambientLight intensity={1} /> */}
+      {/* <ambientLight intensity={10} /> */}
       <SoftShadows samples={3} />
-      {/* <Environment
-        files={"studio_small_09_2k.hdr"}
-        background
-        ground={{
-          height: envMapHeight,
-          radius: envMapRadius,
-          scale: envMapScale,
-        }}
-      /> */}
-      <Environment preset="city" />
+
+      <Environment preset="city" blur={0.4} />
       <OrbitControls enableZoom={true} />
 
       {/* Laptop */}
@@ -109,8 +102,9 @@ export default function Experience() {
       /> */}
 
       <ScrollControls pages={3} damping={0.25}>
-        {/* <HtmlElements /> */}
-        <BathroomScene />
+        <HtmlElements />
+        <Sink />
+        {/* <BathroomScene /> */}
 
         <Scroll>
           {/* <WhoWeAre /> */}

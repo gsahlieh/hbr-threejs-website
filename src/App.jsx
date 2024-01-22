@@ -2,6 +2,7 @@ import { Canvas } from "@react-three/fiber";
 import Experience from "./components/Experience";
 import Navbar from "./components/Navbar";
 import { useEffect, useState } from "react";
+import OpeningSceneText from "./components/OpeningSceneText";
 
 function App() {
   const [fov, setFov] = useState(45);
@@ -26,9 +27,17 @@ function App() {
       <header>
         <Navbar />
       </header>
-      <Canvas camera={{ fov: fov }}>
-        <Experience />
-      </Canvas>
+      <div className="absolute h-full w-full">
+        {/* <OpeningSceneText /> */}
+        <div className="z-2 h-full w-full">
+          <Canvas
+            camera={{ fov: fov }}
+            style={{ height: "100%", width: "100%" }}
+          >
+            <Experience />
+          </Canvas>
+        </div>
+      </div>
     </>
   );
 }
