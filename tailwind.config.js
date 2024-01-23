@@ -1,11 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: [
-    "./src/**/*.{js,jsx,ts,tsx}",
-  ],
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/*.woff"],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        robotoHeavy: ["robotoHeavy", "sans-serif"],
+        robotoRegular: ["robotoRegular", "sans-serif"],
+      },
+    },
   },
   plugins: [],
-}
-
+};

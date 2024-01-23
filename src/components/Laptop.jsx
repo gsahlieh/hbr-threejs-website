@@ -68,16 +68,17 @@ function Model({ open, hinge, laptopPosition, ...props }) {
           {open && (
             <Html
               transform
-              wrapperClass="htmlScreen"
+              // wrapperClass="htmlScreen"
               distanceFactor={1.17}
               position={[
                 0, 0, 0,
-                // laptopPosition[0] - 0.3,
-                // laptopPosition[2],
-                // laptopPosition[1],
+                // laptopPosition[0] - 6.2,
+                // laptopPosition[2] - 1.6,
+                // laptopPosition[1] + 4.53,
               ]}
               rotation-x={-Math.PI / 2}
-              scale={1.45}
+              // scale={1.45}
+              scale={7}
             >
               <iframe src="https://bruno-simon.com/html/" />
             </Html>
@@ -115,7 +116,7 @@ export default function Laptop() {
   // We turn this into a spring animation that interpolates between 0 and 1
   const props = useSpring({ open: Number(open) });
 
-  const laptopPosition = [0, -18, -8];
+  // const laptopPosition = [0, -18, -8];
 
   const { position, rotation, scale } = useControls("laptop", {
     position: {
@@ -136,61 +137,30 @@ export default function Laptop() {
     },
   });
 
-  useFrame((state) => {
-    group.current.position.set(position.x, position.y, position.z);
-    group.current.rotation.set(rotation.x, rotation.y, rotation.z);
-    group.current.scale.set(scale, scale, scale);
-  });
+  // useFrame((state) => {
+  //   group.current.position.set(position.x, position.y, position.z);
+  //   group.current.rotation.set(rotation.x, rotation.y, rotation.z);
+  //   group.current.scale.set(scale, scale, scale);
+  // });
 
   return (
-    // <div className="flex flex-row items-center h-[70vh]">
-    //   <Canvas
-    //     dpr={[1, 2]}
-    //     camera={{ position: [0, 0, -20], fov: 45 }}
-    //     style={{ height: "100%" }}
-    //   >
     <>
-      {/* <three.pointLight
-        position={[10, 10, 10]}
-        intensity={1.5}
-        color={props.open.to([0, 1], ["#f0f0f0", "#d25578"])}
-      /> */}
-      {/* <Html
-        style={{
-          position: "absolute",
-          left: "50%",
-          transform: "translateX(-50%) translateY(-440%)",
-          fontSize: "70px",
-        }}
-      >
-        <h1 className="whitespace-nowrap">What people are saying</h1>
-      </Html> */}
-
-      {/* <Suspense fallback={null}> */}
       <group
         ref={group}
-        position={position}
-        rotation={rotation}
-        scale={scale}
+        position={[6.18, 1.26, -0.41]}
+        rotation={[0, 0.01, 0]}
+        scale={0.15}
+        // position={position}
+        // rotation={rotation}
+        // scale={scale}
         onClick={(e) => (e.stopPropagation(), setOpen(!open))}
       >
         <Model
           open={open}
           hinge={props.open.to([0, 1], [1.575, -0])}
-          laptopPosition={laptopPosition}
+          laptopPosition={[0, -18, -8]}
         />
       </group>
-      {/* <Environment preset="city" /> */}
-      {/* </Suspense> */}
-      {/* <ContactShadows
-        position={[0, -4.5, 0]}
-        opacity={0.4}
-        scale={20}
-        blur={1.75}
-        far={4.5}
-      /> */}
     </>
-    //   </Canvas>
-    // </div>
   );
 }

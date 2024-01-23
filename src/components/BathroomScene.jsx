@@ -15,7 +15,6 @@ import { useControls } from "leva";
 import * as THREE from "three";
 import gsap from "gsap";
 import Laptop from "./Laptop";
-import Sink from "./Sink";
 
 extend(geometry);
 
@@ -23,7 +22,6 @@ export default function BathroomScene() {
   return (
     <>
       <Model position={[0, -5.5, 3]} rotation={[0, -0.2, 0]} />
-      <Sink />
     </>
   );
 }
@@ -32,65 +30,94 @@ function Model(props) {
   const group = useRef();
   const tl = useRef();
   const modelRef = useRef();
-  const model = useGLTF("/bathroom-scene-minus-tap.glb");
+  const model = useGLTF("/bathroom-scene-with-tap.glb");
   const scroll = useScroll();
 
   const [pastOpeningScene, setPastOpeningScene] = useState(false);
 
-  const { modelRotation, modelPosition } = useControls("model", {
-    modelRotation: {
-      value: { x: 0.3, y: -4.72, z: 0 },
+  const { groupRotation, groupPosition } = useControls("groupBathroom", {
+    groupRotation: {
+      value: { x: 0.35, y: -5.14, z: -0.02 },
       step: 0.01,
       joystick: "invertY",
     },
-    modelPosition: {
-      value: { x: -2.22, y: 3.44, z: -2.28 },
+    groupPosition: {
+      value: { x: -3.91, y: -3.01, z: 4.48 },
       step: 0.01,
       joystick: "invertY",
     },
   });
 
   useFrame((state, delta) => {
-    tl.current.seek(scroll.offset * tl.current.duration());
+    tl.current.seek(scroll.offset);
 
-    // modelRef.current.rotation.x = modelRotation.x;
-    // modelRef.current.rotation.y = modelRotation.y;
-    // modelRef.current.rotation.z = modelRotation.z;
-    // modelRef.current.position.x = modelPosition.x;
-    // modelRef.current.position.y = modelPosition.y;
-    // modelRef.current.position.z = modelPosition.z;
+    // group.current.rotation.x = groupRotation.x;
+    // group.current.rotation.y = groupRotation.y;
+    // group.current.rotation.z = groupRotation.z;
+    // group.current.position.x = groupPosition.x;
+    // group.current.position.y = groupPosition.y;
+    // group.current.position.z = groupPosition.z;
   });
 
   useLayoutEffect(() => {
     tl.current = gsap.timeline();
-
-    if (modelRef.current) {
+    if (group.current) {
       tl.current
         .to(
-          modelRef.current.rotation,
+          group.current.rotation,
           {
-            x: 0.3,
-            y: -4.72,
-            z: 0,
-            duration: 3,
+            x: 0.35,
+            y: -5.14,
+            z: -0.02,
+            duration: 0.3,
           },
           0
         )
         .to(
-          modelRef.current.position,
+          group.current.position,
           {
-            x: -2.22,
-            y: 3.44,
-            z: -2.28,
-            duration: 3,
+            x: -3.91,
+            y: -3.01,
+            z: 4.48,
+            duration: 0.3,
           },
           0
         );
+
+      tl.current
+        .to(
+          group.current.rotation,
+          {
+            x: -0.04,
+            y: -6.3,
+            z: 0,
+            duration: 0.3,
+          },
+          0.7
+        )
+        .to(
+          group.current.position,
+          {
+            x: -6.2,
+            y: -1.6,
+            z: 4.53,
+            duration: 0.3,
+          },
+          0.7
+        );
     }
-  }, []);
+  }, [group.current]);
 
   return (
-    <group ref={group} {...props} onClick={() => console.log(scroll)}>
+    <group
+      ref={group}
+      // position={groupPosition}
+      // rotation={groupRotation}
+      position={[5, 0, 0]}
+      rotation={[0, 0, 0]}
+      {...props}
+      onClick={() => console.log(scroll)}
+    >
       <Suspense
         fallback={
           <mesh>

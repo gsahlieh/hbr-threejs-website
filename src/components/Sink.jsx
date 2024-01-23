@@ -12,7 +12,7 @@ export default function Sink() {
   const sinkRef = useRef();
   const tl = useRef();
   const scroll = useScroll();
-  const sink = useGLTF("shower-head.glb");
+  const sink = useGLTF("shower-head-full.glb");
 
   useFrame((state, delta) => {
     if (sinkRef.current) {
@@ -89,9 +89,9 @@ export default function Sink() {
           // scale={scale}
           // position={position}
           // rotation={rotation}
-          scale={3.4}
-          position={[0, 0, 2.52]}
-          rotation={[0, 0, 0]}
+          scale={3.9}
+          position={[0, -0.9, 2.42]}
+          rotation={[0.3, -2, 0]}
         />
       </group>
     </>

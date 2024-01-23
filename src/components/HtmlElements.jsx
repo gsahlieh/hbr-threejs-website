@@ -1,6 +1,7 @@
 import { Scroll } from "@react-three/drei";
 import React, { useEffect, useRef } from "react";
 import ContactForm from "./ContactForm";
+import "../index.css";
 
 export default function HtmlElements() {
   const [width, setWidth] = React.useState(window.innerWidth);
@@ -10,22 +11,38 @@ export default function HtmlElements() {
       {/* Opening Scene */}
 
       {/* Who we are */}
-      {/* <div className="absolute flex flex-col  top-[100vh] w-[50vw]">
-        <div className="flex flex-col items-center justify-center ml-16 my-12 absolute top-[30vh] space-y-5">
-          <h1 className="text-6xl">Welcome To Hills Bathroom Renovations</h1>
-          <p className="text-xl">
-            Hills Bathroom Renovations is the bathroom renovations team that you
-            can rely on to fully transform your bathroom. We have been Bathroom
-            Remodelling in the North West Sydney for more than 15 years,
-            renovating all sorts of bathrooms throughout the Hills area and
-            Northern West Sydney. Our commitment to high -quality, professional
-            work means that you will get the results that you will be amazed
-            with.
+      <div className="absolute flex flex-col top-[100vh] w-[50vw] right-0">
+        <div className="flex flex-col items-center justify-end ml-16 my-12 space-y-5 top-[20vh]">
+          <h1 className="text-7xl text-left outline-text font-robotoHeavy">
+            WHO ARE WE
+          </h1>
+
+          <p className="text-3xl font-light font-robotoRegular">
+            A family owned business which takes pride in providing the best
           </p>
         </div>
-      </div> */}
+      </div>
 
       {/* Previous Works */}
+      <div className="absolute flex flex-col top-[200vh] w-[50vw] right-0">
+        <div className="flex flex-col items-center justify-end ml-16 my-12 space-y-5">
+          <h1 className="text-7xl text-left outline-text font-robotoHeavy">
+            PREVIOUS WORKS
+          </h1>
+
+          <h1 className="text-7xl text-left italic font-robotoHeavy absolute top-[70vh]">
+            Beaumont Hills
+          </h1>
+
+          <h1 className="text-7xl text-left italic font-robotoHeavy absolute top-[170vh]">
+            Rouse Hill
+          </h1>
+
+          <h1 className="text-7xl text-left italic font-robotoHeavy absolute top-[270vh]">
+            Glenhaven
+          </h1>
+        </div>
+      </div>
 
       {/* Reviews */}
       {/* <div className="absolute flex flex-col top-[200vh] w-[100vw] h-[100vh]">

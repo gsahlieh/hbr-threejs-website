@@ -19,7 +19,7 @@ import {
   OrbitControls,
 } from "@react-three/drei";
 import * as THREE from "three";
-import { useControls } from "leva";
+import { Leva, useControls } from "leva";
 import Sink from "./Sink";
 import OpeningSceneText from "./OpeningSceneText";
 
@@ -89,7 +89,7 @@ export default function Experience() {
       <SoftShadows samples={3} />
 
       <Environment preset="city" blur={0.4} />
-      {/* <OrbitControls enableZoom={false} /> */}
+      <OrbitControls enableZoom={false} />
 
       {/* Laptop */}
       {/* <rectAreaLight ref={rectAreaLightRef} color={0xffffff} /> */}
@@ -102,16 +102,16 @@ export default function Experience() {
         position={[0, -9, 0]}
       /> */}
 
-      <ScrollControls pages={2} damping={0.25}>
+      <ScrollControls pages={6.5} damping={0.25}>
         <HtmlElements />
-        {/* <Sink /> */}
         <BathroomScene />
 
         <Scroll>
           <OpeningSceneText />
+          <Sink />
 
           {/* <WhoWeAre /> */}
-          {/* <PreviousWorks /> */}
+          <PreviousWorks />
           {/* <Laptop /> */}
           {/* <Contact /> */}
         </Scroll>
