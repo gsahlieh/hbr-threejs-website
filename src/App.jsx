@@ -1,51 +1,47 @@
 import { Canvas } from "@react-three/fiber";
-import Experience from "./components/Experience";
-import Navbar from "./components/Navbar";
-import { Suspense, useEffect, useState } from "react";
-import OpeningSceneText from "./components/OpeningSceneText";
 import { Leva } from "leva";
+import { Suspense, useState, useEffect } from "react";
+import Experience from "./components/Experience";
 import LoadingScreen from "./components/LoadingScreen";
+import Navbar from "./components/Navbar";
+import MuteButton from "./components/MuteButton";
+import useStore from "./store/store";
 
 function App() {
-  const [fov, setFov] = useState(45);
+  const startPressed = useStore((state) => state.startPressed);
+  const [isHidden, setIsHidden] = useState(true);
 
   useEffect(() => {
-    const width = window.innerWidth;
-
-    if (width >= 1200) {
-      // Desktop
-      setFov(75);
-    } else if (width >= 768 && width < 1200) {
-      // Tablet
-      setFov(90);
-    } else if (width < 768) {
-      // Mobile
-      setFov(120);
+    if (startPressed) {
+      // Set a timeout equal to the CSS transition duration in style.css on .started
+      const timer = setTimeout(() => {
+        setIsHidden(false);
+      }, 1000); // Match the CSS transition duration in style.css on .started
+      return () => clearTimeout(timer);
     }
-  }, []);
-
-  // Loading screen stuff
-  const [start, setStart] = useState(false);
+  }, [startPressed]);
 
   return (
     <>
-      <header>
-        <Navbar />
-      </header>
-      <div className="absolute h-full w-full">
-        {/* <OpeningSceneText /> */}
-        <div className="z-2 h-full w-full">
-          <Leva collapsed />
+      <div className="relative h-full w-full">
+        <header>
+          <Navbar />
+        </header>
+        {!isHidden && <MuteButton />}
+        <div className="h-full w-full">
+          <div className="z-2 h-full w-full">
+            <Leva collapsed hidden />
 
-          <Canvas
-            camera={{ fov: fov }}
-            style={{ height: "100%", width: "100%" }}
-          >
-            <Suspense fallback={null}>
-              <Experience />
-            </Suspense>
-          </Canvas>
-          <LoadingScreen started={start} onStarted={() => setStart(true)} />
+            <Canvas
+              camera={{ fov: 75 }}
+              style={{ height: "100%", width: "100%" }}
+            >
+              <Suspense fallback={null}>
+                <Experience />
+              </Suspense>
+            </Canvas>
+            <LoadingScreen />
+          </div>
         </div>
       </div>
     </>

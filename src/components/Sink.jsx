@@ -1,13 +1,32 @@
 import { useGLTF, useScroll } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useControls } from "leva";
-import React, { useRef, useLayoutEffect } from "react";
+import React, { useRef, useState, useEffect, useLayoutEffect } from "react";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import useDeviceDetect from "./hooks/useDeviceDetect";
 
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Sink() {
+  const { isMobile } = useDeviceDetect();
+  const [modelScale, setModelScale] = useState(3.9);
+  const [modelPosition, setModelPosition] = useState([0, -0.9, 2.42]);
+
+  useEffect(() => {
+    const updateModelScale = () => {
+      if (isMobile) {
+        setModelScale(2.3);
+        setModelPosition([0, -0.5, 2.62]);
+      } else {
+        setModelScale(3.9);
+        setModelPosition([0, -0.9, 2.42]);
+      }
+    };
+
+    updateModelScale();
+  }, [isMobile]);
+
   const group = useRef();
   const sinkRef = useRef();
   const tl = useRef();
@@ -89,8 +108,8 @@ export default function Sink() {
           // scale={scale}
           // position={position}
           // rotation={rotation}
-          scale={3.9}
-          position={[0, -0.9, 2.42]}
+          scale={modelScale}
+          position={modelPosition}
           rotation={[0.3, -2, 0]}
         />
       </group>

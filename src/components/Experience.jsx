@@ -1,119 +1,42 @@
-import { useRef, useState, useEffect } from "react";
-import HtmlElements from "./HtmlElements";
-import BathroomScene from "./BathroomScene";
-import WhoWeAre from "./WhoWeAre";
-import PreviousWorks from "./PreviousWorks";
-import Laptop from "./Laptop";
-import ContactForm from "./ContactForm";
-import { Canvas, extend, useFrame } from "@react-three/fiber";
 import {
-  ScrollControls,
-  useGLTF,
-  SoftShadows,
-  Html,
-  CameraControls,
-  useHelper,
-  Scroll,
-  Sparkles,
   Environment,
+  Scroll,
+  ScrollControls,
+  SoftShadows,
   OrbitControls,
+  useAspect,
+  useTexture,
+  Plane,
 } from "@react-three/drei";
-import * as THREE from "three";
-import { Leva, useControls } from "leva";
-import Sink from "./Sink";
+import { useFrame } from "@react-three/fiber";
+import React, { useRef, useState } from "react";
+import { MathUtils, Vector3 } from "three";
+import BathroomScene from "./BathroomScene";
+import HtmlElements from "./HtmlElements";
 import OpeningSceneText from "./OpeningSceneText";
+import Sink from "./Sink";
+import "./materials/layerMaterial";
+import leaves1Url from "/images/leaves1.png";
+import leaves2Url from "/images/leaves2.png";
+import Fireflies from "./Fireflies";
+import { useControls } from "leva";
+import BackgroundOverlay from "./BackgroundOverlay";
 
 export default function Experience() {
-  const rectAreaLightRef = useRef();
-
-  const { position, rotation, width, height, intensity } = useControls(
-    "rectAreaLight",
-    {
-      position: {
-        value: { x: 0, y: 0, z: 2 },
-        step: 0.01,
-        joystick: "invertY",
-      },
-      rotation: {
-        value: { x: 0, y: 0, z: 0 },
-        step: 0.01,
-        joystick: "invertY",
-      },
-      width: {
-        value: 10,
-        min: 0,
-        max: 10,
-      },
-      height: {
-        value: 10,
-        min: 0,
-        max: 10,
-      },
-      intensity: {
-        value: 10,
-        min: 0,
-        max: 10,
-      },
-    }
-  );
-
-  // const { envMapIntensity, envMapHeight, envMapRadius, envMapScale } =
-  //   useControls("environment map", {
-  //     envMapIntensity: { value: 7, min: 0, max: 12 },
-  //     envMapHeight: { value: 7, min: 0, max: 100 },
-  //     envMapRadius: { value: 28, min: 10, max: 1000 },
-  //     envMapScale: { value: 100, min: 10, max: 1000 },
-  //   });
-
-  useHelper(rectAreaLightRef, THREE.RectAreaLightHelper, 1);
-
-  useFrame(({ clock }) => {
-    // rectAreaLightRef.current.position.x = position.x;
-    // rectAreaLightRef.current.position.y = position.y;
-    // rectAreaLightRef.current.position.z = position.z;
-    // rectAreaLightRef.current.rotation.x = rotation.x;
-    // rectAreaLightRef.current.rotation.y = rotation.y;
-    // rectAreaLightRef.current.rotation.z = rotation.z;
-    // rectAreaLightRef.current.width = width;
-    // rectAreaLightRef.current.height = height;
-    // rectAreaLightRef.current.intensity = intensity;
-  });
-
   return (
     <>
-      <fog attach="fog" args={["black", 0, 20]} />
+      <Environment files="/hdrs/blue_grotto_1k.hdr" background blur={0.5} />
+      {/* <ambientLight intensity={1} /> */}
+      {/* <OrbitControls enableZoom={true} /> */}
 
-      {/* <pointLight position={[10, -10, -20]} intensity={10} />
-      <pointLight position={[-10, -10, -20]} intensity={10} /> */}
-      {/* <ambientLight intensity={10} /> */}
-      <SoftShadows samples={3} />
-
-      <Environment preset="city" blur={0.4} />
-      <OrbitControls enableZoom={false} />
-
-      {/* Laptop */}
-      {/* <rectAreaLight ref={rectAreaLightRef} color={0xffffff} /> */}
-
-      {/* Contact */}
-      {/* <Sparkles
-        count={300}
-        scale={[20, 20, 20]}
-        size={5}
-        position={[0, -9, 0]}
-      /> */}
-
-      <ScrollControls pages={6.5} damping={0.25}>
+      <ScrollControls pages={8} damping={0.25}>
+        <BackgroundOverlay />
         <HtmlElements />
         <BathroomScene />
 
         <Scroll>
           <OpeningSceneText />
           <Sink />
-
-          {/* <WhoWeAre /> */}
-          <PreviousWorks />
-          {/* <Laptop /> */}
-          {/* <Contact /> */}
         </Scroll>
       </ScrollControls>
     </>

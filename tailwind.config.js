@@ -6,6 +6,7 @@ export default {
       fontFamily: {
         robotoHeavy: ["robotoHeavy", "sans-serif"],
         robotoRegular: ["robotoRegular", "sans-serif"],
+        playfair: ["playfair", "serif"],
       },
     },
   },

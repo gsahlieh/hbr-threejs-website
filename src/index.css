@@ -12,55 +12,73 @@
   src: url("roboto-v30-latin-regular.woff") format("woff");
 }
 
+@font-face {
+  font-family: "playfair";
+  src: url("playfair-display-v36-latin-regular.woff") format("woff");
+}
+
 html,
 body,
 #root {
-  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   overflow: hidden;
-  background-color: #242424;
+  background-color: "#242424";
+}
+/* 
+.main {
+  position: relative;
+  width: 100%;
+  height: 100%;
 }
 
-/* :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+.root {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
 }
 
-* {
-  box-sizing: border-box;
-}*/
+.background {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.backgroundSection {
+  background-color: #ff5733;
+}
+
+html > body > .htmlScreen:nth-child(2) {
+  background-color: #33ff57;
+}
+
+html > body > .htmlScreen:nth-child(3) {
+  background-color: #5733ff;
+} */
 
 body {
   color: white;
-  background: black;
-  background: radial-gradient(
-    circle at bottom center,
-    rgba(60, 60, 60, 1) 0%,
-    rgba(0, 0, 0, 1) 58%
-  );
-  cursor: url("https://github.com/chenglou/react-motion/raw/master/demos/demo8-draggable-list/cursor.png")
+  background-color: #242424;
+  /* cursor: url("https://github.com/chenglou/react-motion/raw/master/demos/demo8-draggable-list/cursor.png")
       39 39,
-    auto;
+    auto; */
 }
 
-.htmlScreen iframe {
+.htmlScreen {
   width: 1920px;
   height: 1080px;
   border: none;
   border-radius: 20px;
-  background: #000000;
+  top: 650vh;
+  position: absolute;
 }
 
 /* For OpeningScene */
@@ -101,11 +119,7 @@ body {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    to top right,
-    rgb(255, 255, 255),
-    rgb(145, 108, 213)
-  );
+  background: linear-gradient(to top right, rgb(0, 0, 0), rgb(44, 1, 123));
 }
 
 .loader-container {
@@ -119,81 +133,96 @@ body {
   align-items: center;
 }
 
-#loader-startButton {
-  transition: transform 0.1s ease-in-out;
+/* WATER LOADER */
+.box {
+  height: 280px;
+  width: 280px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #020438;
+  border-radius: 100%;
+  border: 2px solid black;
+  overflow: hidden;
+}
+
+.box:hover {
+  border: 2px solid white;
+  color: #000;
+}
+
+.box .percent {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 3;
   width: 100%;
   height: 100%;
-  border: none;
-  outline: none;
-  color: white;
-  font-weight: 700;
-  font-size: 14px;
-  letter-spacing: 1px;
-  background: #111;
-  cursor: pointer;
-  border-radius: 10px;
-  text-align: center;
-  line-height: 50px;
+  display: flex;
+  display: -webkit-flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 64px;
 }
 
-#loader-startButton:before {
-  content: "";
-  background: linear-gradient(
-    45deg,
-    #ff0000,
-    #ff7300,
-    #fffb00,
-    #48ff00,
-    #00ffd5,
-    #002bff,
-    #7a00ff,
-    #ff00c8,
-    #ff0000
-  );
+.box .water {
   position: absolute;
-  top: -2px;
-  left: -2px;
-  background-size: 400%;
-  z-index: -1;
-  filter: blur(5px);
-  width: calc(100% + 4px);
-  height: calc(100% + 4px);
-  animation: glowing 20s linear infinite;
-  opacity: var(--before-opacity, 0);
-  transition: opacity 0.3s ease-in-out;
-  border-radius: 10px;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  width: 100%;
+  height: 100%;
+  transform: translate(0, 100%);
+  background: #4d6de3;
+  transition: all 0.3s;
 }
-
-#loader-startButton:active {
-  transform: scale(0.9);
+.box .water_wave {
+  width: 200%;
+  position: absolute;
+  bottom: 100%;
 }
-
-#loader-startButton.loaded:hover {
-  z-index: 1;
+.box .water_wave_back {
+  right: 0;
+  fill: #c7eeff;
+  animation: wave-back 1.4s infinite linear;
 }
-
-#loader-startButton.loaded:before {
-  opacity: 1;
+.box .water_wave_front {
+  left: 0;
+  fill: #4d6de3;
+  margin-bottom: -1px;
+  animation: wave-front 0.7s infinite linear;
 }
-
-#loader-startButton:hover:before {
-  opacity: 1;
-}
-
-#loader-startButton:active:before {
-  opacity: 1;
-}
-
-@keyframes glowing {
-  0% {
-    background-position: 0 0;
-  }
-
-  50% {
-    background-position: 400% 0;
-  }
-
+@keyframes wave-front {
   100% {
-    background-position: 0 0;
+    transform: translate(-50%, 0);
   }
+}
+@keyframes wave-back {
+  100% {
+    transform: translate(50%, 0);
+  }
+}
+
+.mute-button {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 1000;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Style for SVG icons */
+.svg-icon {
+  height: 32px;
+  width: 32px;
+  color: #fff;
 }
