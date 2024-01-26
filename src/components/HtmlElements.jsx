@@ -1,5 +1,5 @@
 import { Scroll } from "@react-three/drei";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ContactForm from "./ContactForm";
 import useDeviceDetect from "./hooks/useDeviceDetect";
 
