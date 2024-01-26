@@ -1,21 +1,19 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { FaVolumeMute, FaVolumeUp } from "react-icons/fa";
-import { Link, animateScroll as scroll } from "react-scroll";
-import useDeviceDetect from "./hooks/useDeviceDetect";
 import useStore from "../store/store";
 
-// Audio
+// Background music
 const music = new Audio("./audio/spa-jazz-piano-music.mp3");
 music.volume = 0.3;
 music.loop = true;
 
 export default function MuteButton() {
-  const { isMobile } = useDeviceDetect();
+  // Setting variables + global state management
   const muted = useStore((state) => state.muted);
   const setMuted = useStore((state) => state.setMuted);
   const startPressed = useStore((state) => state.startPressed);
-  const setStartPressed = useStore((state) => state.setStartPressed);
 
+  // Ensuring music plays on loop
   useEffect(() => {
     if (startPressed) {
       music.play();
@@ -26,7 +24,7 @@ export default function MuteButton() {
     }
   }, [startPressed]);
 
-  // Mute button
+  // Handling clicking of mute button
   const toggleMute = () => {
     if (muted) {
       setMuted(false);

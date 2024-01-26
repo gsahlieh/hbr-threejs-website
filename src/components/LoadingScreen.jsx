@@ -3,37 +3,42 @@ import { useProgress } from "@react-three/drei";
 import useStore from "../store/store";
 
 export default function LoadingScreen() {
+  // Variables for loading percentage
   const { progress } = useProgress();
-  const [isHidden, setIsHidden] = useState(false);
   const [progressValue, setProgressValue] = useState(0);
+
+  // Variables + functions for loading screen removal
+  const [isHidden, setIsHidden] = useState(false);
   const startPressed = useStore((state) => state.startPressed);
   const setStartPressed = useStore((state) => state.setStartPressed);
-
   useEffect(() => {
     if (startPressed) {
-      // Set a timeout equal to the CSS transition duration in style.css on .started
       const timer = setTimeout(() => {
         setIsHidden(true);
-      }, 1000); // Match the CSS transition duration in style.css on .started
+      }, 1000);
       return () => clearTimeout(timer);
     }
   }, [startPressed]);
 
   useEffect(() => {
+    // Preventing the percentage from decreasing (odd bug with Drei's useProgress hook)
     if (progress > progressValue) {
       setProgressValue(progress);
     }
 
+    // Animating the water level
     document.getElementById("water").style.transform =
       "translate(0" + "," + (100 - progressValue) + "%)";
   }, [progress]);
 
+  // Setting the conditional class for the outer div
   const loadingOuterClass = `loader-outer flex justify-center items-center w-full h-full ${
     startPressed ? "started" : "not-started"
   } ${progressValue === 100 ? "loading-completed" : "loading-not-completed"} ${
     isHidden ? "hidden" : ""
   }`;
 
+  // Function for handling the button click
   const handleButtonClick = () => {
     if (progressValue === 100) {
       setStartPressed(true);

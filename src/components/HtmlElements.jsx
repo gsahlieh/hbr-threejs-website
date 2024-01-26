@@ -1,9 +1,7 @@
 import { Scroll } from "@react-three/drei";
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import ContactForm from "./ContactForm";
-import "../index.css";
 import useDeviceDetect from "./hooks/useDeviceDetect";
-import { FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 
 // Audio
 const music = new Audio("./audio/spa-jazz-piano-music.mp3");
@@ -11,26 +9,11 @@ music.volume = 0.3;
 music.loop = true;
 
 export default function HtmlElements() {
-  const [width, setWidth] = React.useState(window.innerWidth);
-  const { isMobile, isDesktop, isWideScreen } = useDeviceDetect();
-  const [modelScale, setModelScale] = useState(3.9);
-
-  useEffect(() => {
-    const updateModelScale = () => {
-      if (isMobile) {
-        setModelScale(2.3);
-      } else {
-        setModelScale(3.9);
-      }
-    };
-
-    updateModelScale();
-  }, [isMobile]);
+  const { isWideScreen } = useDeviceDetect();
 
   return (
     <>
       <Scroll html style={{ width: "100%" }}>
-        {/* Opening Scene */}
         {/* Who we are */}
         <div className="absolute flex flex-col top-[100vh] md:w-[50vw] w-full md:mx-0 px-8 right-0">
           <div className="flex flex-col items-center my-12 space-y-5 justify-end">
@@ -51,6 +34,7 @@ export default function HtmlElements() {
             </div>
           </div>
         </div>
+
         {/* Previous Works */}
         <div className="absolute flex flex-col top-[220vh] md:w-[50vw] w-full px-8 md:right-0">
           <div className="flex flex-col my-12 space-y-5 w-full justify-center items-center">
@@ -129,8 +113,8 @@ export default function HtmlElements() {
             </div>
           </div>
         </div>
-        {/* Reviews */}
-        {/* Contact */}
+
+        {/* Get in Touch */}
         <div
           className={`absolute flex flex-col top-[597vh] ${
             isWideScreen ? "md:top-[720vh]" : "md:top-[710vh]"

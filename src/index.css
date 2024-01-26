@@ -4,17 +4,17 @@
 
 @font-face {
   font-family: "robotoHeavy";
-  src: url("/roboto-v30-latin-900.woff") format("woff");
+  src: url("/fonts/roboto-v30-latin-900.woff") format("woff");
 }
 
 @font-face {
   font-family: "robotoRegular";
-  src: url("roboto-v30-latin-regular.woff") format("woff");
+  src: url("/fonts/roboto-v30-latin-regular.woff") format("woff");
 }
 
 @font-face {
   font-family: "playfair";
-  src: url("playfair-display-v36-latin-regular.woff") format("woff");
+  src: url("/fonts/playfair-display-v36-latin-regular.woff") format("woff");
 }
 
 html,
@@ -27,92 +27,17 @@ body,
   overflow: hidden;
   background-color: "#242424";
 }
-/* 
-.main {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.root {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-
-.background {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-.backgroundSection {
-  background-color: #ff5733;
-}
-
-html > body > .htmlScreen:nth-child(2) {
-  background-color: #33ff57;
-}
-
-html > body > .htmlScreen:nth-child(3) {
-  background-color: #5733ff;
-} */
-
 body {
   color: white;
   background-color: #242424;
-  /* cursor: url("https://github.com/chenglou/react-motion/raw/master/demos/demo8-draggable-list/cursor.png")
-      39 39,
-    auto; */
 }
 
-.htmlScreen {
-  width: 1920px;
-  height: 1080px;
-  border: none;
-  border-radius: 20px;
-  top: 650vh;
-  position: absolute;
-}
-
-/* For OpeningScene */
-.text-9xl {
-  font-size: 9rem;
-}
-
-.blur {
-  filter: blur(7.5px);
-}
-
-.stroke-white {
-  -webkit-text-stroke: 2px white;
-}
-
-.outline-text {
-  -webkit-text-stroke-width: 1px;
-  -webkit-text-stroke-color: white;
-  font-style: italic;
-  color: transparent;
-}
-
-/* LOADING SAMPLE */
-
+/* WATER LOADER */
 .started {
   opacity: 0;
   transition: opacity 1s ease-in-out;
 }
 
-.hidden {
-  display: none;
-}
-
-/* Loader styles */
 .loader-outer {
   position: fixed;
   top: 0;
@@ -133,7 +58,6 @@ body {
   align-items: center;
 }
 
-/* WATER LOADER */
 .box {
   height: 280px;
   width: 280px;
@@ -217,11 +141,4 @@ body {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-}
-
-/* Style for SVG icons */
-.svg-icon {
-  height: 32px;
-  width: 32px;
-  color: #fff;
 }

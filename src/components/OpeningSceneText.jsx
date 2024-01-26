@@ -1,14 +1,26 @@
 import { Text, useScroll } from "@react-three/drei";
-import React, { useEffect, useState } from "react";
-import useDeviceDetect from "./hooks/useDeviceDetect";
 import { useFrame } from "@react-three/fiber";
 import { useControls } from "leva";
+import React, { useEffect, useState } from "react";
+import useDeviceDetect from "./hooks/useDeviceDetect";
 
 export default function OpeningSceneText() {
-  const { isMobile } = useDeviceDetect();
+  // Scroll tracking
   const scroll = useScroll();
   const [scrollOffset, setScrollOffset] = useState(0);
+
+  // Stop showing outline text when scrolled down (otherwise there is an odd effect)
   const [outlineTextShowing, setOutlineTextShowing] = useState(true);
+  useEffect(() => {
+    if (scroll.offset > 0.001) {
+      setOutlineTextShowing(false);
+    } else {
+      setOutlineTextShowing(true);
+    }
+  }, [scroll.offset]);
+
+  // Different posiiton for mobile compared to desktop/widescreen
+  const { isMobile } = useDeviceDetect();
   const [behindFontSize, setBehindFontSize] = useState(0.75);
   const [frontFontSize, setFrontFontSize] = useState(0.5);
   const outlineTextRef = React.useRef();
@@ -29,24 +41,30 @@ export default function OpeningSceneText() {
     updateFontSizes();
   }, [isMobile]);
 
-  useEffect(() => {
-    if (scroll.offset > 0.001) {
-      setOutlineTextShowing(false);
-    } else {
-      setOutlineTextShowing(true);
-    }
-  }, [scroll.offset]);
-
   useFrame((state) => {
     if (scrollOffset !== scroll.offset) {
       setScrollOffset(scroll.offset);
     }
   });
 
+  // DEBUG MODE
   const { fillColor, outlineColor } = useControls("text", {
     fillColor: "#ffffff",
     outlineColor: "#ffffff",
   });
+  // Reset colour upon debug mode
+  useEffect(() => {
+    if (blurTextRef.current && solidTextRef.current && outlineTextRef.current) {
+      blurTextRef.current.outlineColor = "#ffffff";
+      blurTextRef.current.color = "#ffffff";
+
+      solidTextRef.current.outlineColor = "#ffffff";
+      solidTextRef.current.color = "#ffffff";
+
+      outlineTextRef.current.strokeColor = "#ffffff";
+      outlineTextRef.current.fillColor = "#ffffff";
+    }
+  }, []);
 
   useFrame((state) => {
     if (blurTextRef.current && solidTextRef.current && outlineTextRef.current) {
@@ -70,7 +88,7 @@ export default function OpeningSceneText() {
         color={fillColor}
         outlineColor={outlineColor}
         fillOpacity={0}
-        font="roboto-v30-latin-900.woff"
+        font="/fonts/roboto-v30-latin-900.woff"
         fontWeight="bold"
         outlineBlur={0.05}
         fontSize={behindFontSize}
@@ -86,7 +104,7 @@ export default function OpeningSceneText() {
         opacity={0}
         outlineColor={outlineColor}
         color="rgba(255, 1, 255, 1)"
-        font="roboto-v30-latin-900.woff"
+        font="/fonts/roboto-v30-latin-900.woff"
         fontWeight="bold"
         fontSize={behindFontSize}
         textAlign={"center"}
@@ -102,7 +120,7 @@ export default function OpeningSceneText() {
           fillOpacity={0}
           strokeColor={outlineColor}
           strokeWidth={0.01}
-          font="roboto-v30-latin-900.woff"
+          font="/fonts/roboto-v30-latin-900.woff"
           fontWeight="bold"
           fontSize={frontFontSize}
           textAlign={"center"}

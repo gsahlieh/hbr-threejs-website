@@ -1,27 +1,12 @@
-import { useRef, useLayoutEffect, useEffect, useState, Suspense } from "react";
-import { Canvas, extend, useFrame } from "@react-three/fiber";
-import {
-  useGLTF,
-  SoftShadows,
-  Html,
-  CameraControls,
-  useHelper,
-  Scroll,
-  OrbitControls,
-  useScroll,
-  useTexture,
-} from "@react-three/drei";
-import { easing, geometry } from "maath";
-import { useControls } from "leva";
-import * as THREE from "three";
+import { useGLTF, useScroll } from "@react-three/drei";
+import { extend, useFrame } from "@react-three/fiber";
 import gsap from "gsap";
+import { Suspense, useEffect, useRef, useState } from "react";
+import useStore from "../store/store";
 import Laptop from "./Laptop";
 import useDeviceDetect from "./hooks/useDeviceDetect";
-import useStore from "../store/store";
 
-extend(geometry);
-
-// Audio
+// Water Audio
 const waterSoundEffect = new Audio("./audio/water-running-60s.mp3");
 waterSoundEffect.volume = 0.2;
 waterSoundEffect.loop = true;
@@ -34,7 +19,19 @@ export default function BathroomScene() {
   );
 }
 
-function Model(props) {
+function Model() {
+  // Loading 3D models + setting refs
+  const group = useRef();
+  const waterStreamRef = useRef();
+  const model = useGLTF("/models/bathroom-scene-draco.glb");
+  const waterStream = useGLTF("/models/water-stream.glb");
+
+  // For scroll tracking + animations
+  const tl = useRef();
+  const scroll = useScroll();
+  const [scrollOffset, setScrollOffset] = useState(scroll.offset);
+
+  // Setting varibles based on device type (different for mobile)
   const { isMobile } = useDeviceDetect();
   const [
     modelPositionAfterFirstAppearing,
@@ -61,55 +58,8 @@ function Model(props) {
     updateModelPositionAfterFirstAppearing();
   }, [isMobile]);
 
-  const group = useRef();
-  const tl = useRef();
-  const modelRef = useRef();
-  const model = useGLTF("/bathroom-scene-with-tap.glb");
-  const waterStream = useGLTF("/water-stream-centered.glb");
-  const scroll = useScroll();
-
-  const { groupRotation, groupPosition } = useControls("groupBathroom", {
-    groupRotation: {
-      value: { x: -0.04, y: -6.3, z: 0 },
-      step: 0.01,
-      joystick: "invertY",
-    },
-    groupPosition: {
-      value: { x: -6.2, y: -1.3, z: 4 },
-      step: 0.01,
-      joystick: "invertY",
-    },
-  });
-
-  const waterStreamRef = useRef();
-  const [waterRunning, setWaterRunning] = useState(false);
-  const [scrollOffset, setScrollOffset] = useState(scroll.offset);
+  // Water Audio
   const muted = useStore((state) => state.muted);
-
-  const waterMaterial = new THREE.MeshStandardMaterial({
-    color: "#ff0000",
-    opacity: 0.5,
-  });
-
-  const { position, rotation, scale } = useControls("waterStream", {
-    position: {
-      value: { x: 4.08, y: 3.01, z: -0.11 },
-      step: 0.01,
-      joystick: "invertY",
-    },
-    rotation: {
-      value: { x: -Math.PI, y: 0, z: 0 },
-      step: 0.01,
-      joystick: "invertY",
-    },
-    scale: {
-      value: { x: 3, y: 0.1, z: 3 },
-      min: 0,
-      step: 0.01,
-      max: 10,
-    },
-  });
-
   useEffect(() => {
     if (!muted && scrollOffset >= 0.1) {
       waterSoundEffect.play();
@@ -118,19 +68,13 @@ function Model(props) {
     }
   }, [scrollOffset, muted]);
 
-  useFrame((state, delta) => {
+  // ALL ANIMATIONS
+  useFrame(() => {
     tl.current.seek(scroll.offset);
 
     if (scrollOffset !== scroll.offset) {
       setScrollOffset(scroll.offset);
     }
-
-    // group.current.rotation.x = groupRotation.x;
-    // group.current.rotation.y = groupRotation.y;
-    // group.current.rotation.z = groupRotation.z;
-    // group.current.position.x = groupPosition.x;
-    // group.current.position.y = groupPosition.y;
-    // group.current.position.z = groupPosition.z;
   });
 
   useEffect(() => {
@@ -230,24 +174,9 @@ function Model(props) {
   }, [group.current, waterStreamRef.current, modelPositionAfterFirstAppearing]);
 
   return (
-    <group
-      ref={group}
-      // position={groupPosition}
-      // rotation={groupRotation}
-      position={[-10, -5.5, 3]}
-      rotation={[0, -0.2, 0]}
-      onClick={() => console.log(scroll)}
-    >
-      <Suspense
-        fallback={
-          <mesh>
-            <boxGeometry args={[1, 1, 1]} />
-            <meshBasicMaterial wireframe={true} />
-          </mesh>
-        }
-      >
+    <group ref={group} position={[-10, -5.5, 3]} rotation={[0, -0.2, 0]}>
+      <Suspense fallback={null}>
         <primitive
-          ref={modelRef}
           object={model.scene}
           position={[5, 0, 0]}
           rotation={[0, 0, 0]}
@@ -259,19 +188,7 @@ function Model(props) {
           position={[4.08, 3.21, -0.1]}
           rotation={[-Math.PI, 0, 0]}
           scale={[3, 0.1, 3]}
-        >
-          <meshBasicMaterial color={"blue"} />
-        </primitive>
-
-        {/* <mesh
-          position={[4.08, 3.21, -0.1]}
-          rotation={[-Math.PI, 0, 0]}
-          scale={[3, 0.1, 3]}
-        >
-          <boxGeometry args={[1, 1, 1]} />
-          <meshBasicMaterial color={"blue"} />
-        </mesh> */}
-
+        />
         <Laptop />
       </Suspense>
     </group>

@@ -10,8 +10,17 @@ import useDeviceDetect from "./hooks/useDeviceDetect";
 
 export default function BackgroundOverlay() {
   const { isMobile, isDesktop, isWideScreen } = useDeviceDetect();
-
   const [useAspectArgs, setUseAspectArgs] = useState([1920, 1080, 1.2]);
+  const textures = useTexture([leaves1Url, leaves2Url]);
+  const group = useRef();
+  const layersRef = useRef([]);
+  const [movement] = useState(() => new Vector3());
+  const [temp] = useState(() => new Vector3());
+  const scaleW = useAspect(
+    useAspectArgs[0],
+    useAspectArgs[1],
+    useAspectArgs[2]
+  );
 
   useEffect(() => {
     const updateUseAspectArgs = () => {
@@ -27,23 +36,9 @@ export default function BackgroundOverlay() {
     updateUseAspectArgs();
   }, [isMobile, isDesktop, isWideScreen]);
 
-  const scaleW = useAspect(
-    useAspectArgs[0],
-    useAspectArgs[1],
-    useAspectArgs[2]
-  );
-  const textures = useTexture([leaves1Url, leaves2Url]);
-  const group = useRef();
-  const layersRef = useRef([]);
-  const [movement] = useState(() => new Vector3());
-  const [temp] = useState(() => new Vector3());
-  const leaves1Ref = useRef();
-  const leaves2Ref = useRef();
-
   const layers = [
     {
       texture: textures[0],
-      ref: leaves1Ref,
       x: 0,
       y: 0,
       z: 0,
@@ -54,7 +49,6 @@ export default function BackgroundOverlay() {
     },
     {
       texture: textures[1],
-      ref: leaves2Ref,
       x: 0,
       y: 0,
       z: 0,
@@ -96,7 +90,6 @@ export default function BackgroundOverlay() {
           args={[1, 1, layers[0].wiggle ? 10 : 1, layers[0].wiggle ? 10 : 1]}
           position={[layers[0].x, layers[0].y, layers[0].z]}
           rotation={[0, 0, isMobile ? Math.PI / 2 : 0]}
-          ref={layers[0].ref}
         >
           <layerMaterial
             movement={movement}
@@ -113,7 +106,6 @@ export default function BackgroundOverlay() {
           args={[1, 1, layers[1].wiggle ? 10 : 1, layers[1].wiggle ? 10 : 1]}
           position={[layers[1].x, layers[1].y, layers[1].z]}
           rotation={[0, 0, isMobile ? Math.PI / 2 : 0]}
-          ref={layers[1].ref}
         >
           <layerMaterial
             movement={movement}

@@ -1,25 +1,40 @@
 import { Canvas } from "@react-three/fiber";
 import { Leva } from "leva";
-import { Suspense, useState, useEffect } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Experience from "./components/Experience";
 import LoadingScreen from "./components/LoadingScreen";
-import Navbar from "./components/Navbar";
 import MuteButton from "./components/MuteButton";
+import Navbar from "./components/Navbar";
 import useStore from "./store/store";
 
 function App() {
+  // Fetching global state (zustand)
   const startPressed = useStore((state) => state.startPressed);
+  const debugMode = useStore((state) => state.debugMode);
+  const setDebugMode = useStore((state) => state.setDebugMode);
   const [isHidden, setIsHidden] = useState(true);
 
+  // Handling slow fade in of mute button after loading screen is removed (otherwise it oddly pops up)
   useEffect(() => {
     if (startPressed) {
-      // Set a timeout equal to the CSS transition duration in style.css on .started
       const timer = setTimeout(() => {
         setIsHidden(false);
-      }, 1000); // Match the CSS transition duration in style.css on .started
+      }, 1000);
       return () => clearTimeout(timer);
     }
   }, [startPressed]);
+
+  // DEBUG MODE
+  useEffect(() => {
+    const handleHashChange = () => {
+      setDebugMode(window.location.hash === "#debug");
+    };
+    window.addEventListener("hashchange", handleHashChange);
+    handleHashChange();
+    return () => {
+      window.removeEventListener("hashchange", handleHashChange);
+    };
+  }, []);
 
   return (
     <>
@@ -30,7 +45,8 @@ function App() {
         {!isHidden && <MuteButton />}
         <div className="h-full w-full">
           <div className="z-2 h-full w-full">
-            <Leva collapsed hidden />
+            {/* For debug mode */}
+            <Leva collapsed hidden={debugMode === false} />
 
             <Canvas
               camera={{ fov: 75 }}
@@ -42,6 +58,7 @@ function App() {
             </Canvas>
             <LoadingScreen />
           </div>
+          <div id="test"></div>
         </div>
       </div>
     </>
