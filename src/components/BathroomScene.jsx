@@ -5,9 +5,10 @@ import { Suspense, useEffect, useRef, useState } from "react";
 import useStore from "../store/store";
 import Laptop from "./Laptop";
 import useDeviceDetect from "./hooks/useDeviceDetect";
+import * as THREE from "three";
 
 // Water Audio
-const waterSoundEffect = new Audio("./audio/water-running.mp3");
+const waterSoundEffect = new Audio("/audio/water-running.mp3");
 waterSoundEffect.volume = 0.2;
 waterSoundEffect.loop = true;
 
@@ -61,11 +62,15 @@ function Model() {
   // Water Audio
   const muted = useStore((state) => state.muted);
   useEffect(() => {
-    if (!muted && scrollOffset >= 0.1) {
-      waterSoundEffect.play();
+    if (scrollOffset >= 0.1) {
+      if (!muted) {
+        waterSoundEffect.play();
+      }
     } else {
       waterSoundEffect.pause();
     }
+
+    waterStreamRef.current.visible = scrollOffset >= 0.1;
   }, [scrollOffset, muted]);
 
   // ALL ANIMATIONS
@@ -175,22 +180,21 @@ function Model() {
 
   return (
     <group ref={group} position={[-10, -5.5, 3]} rotation={[0, -0.2, 0]}>
-      <Suspense fallback={null}>
-        <primitive
-          object={model.scene}
-          position={[5, 0, 0]}
-          rotation={[0, 0, 0]}
-          scale={3}
-        />
-        <primitive
-          ref={waterStreamRef}
-          object={waterStream.scene}
-          position={[4.08, 3.21, -0.1]}
-          rotation={[-Math.PI, 0, 0]}
-          scale={[3, 0.1, 3]}
-        />
-        <Laptop />
-      </Suspense>
+      <primitive
+        object={model.scene}
+        position={[5, 0, 0]}
+        rotation={[0, 0, 0]}
+        scale={3}
+      />
+      <primitive
+        ref={waterStreamRef}
+        object={waterStream.scene}
+        position={[4.08, 3.21, -0.1]}
+        rotation={[-Math.PI, 0, 0]}
+        scale={[3, 0.1, 3]}
+      />
+
+      <Laptop />
     </group>
   );
 }
