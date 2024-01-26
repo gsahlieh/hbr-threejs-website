@@ -2,7 +2,6 @@ import { useSpring } from "@react-spring/core";
 import { a as three } from "@react-spring/three";
 import { useGLTF, useScroll, useTexture } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
-import { useControls } from "leva";
 import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 
