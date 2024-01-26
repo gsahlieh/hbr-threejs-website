@@ -10,7 +10,7 @@
 
 ## Description
 
-This is a landing page created for Hills Bathroom Renovations mainly using @react-three/fiber, @react-three/drei, @react-spring and three
+This is a landing page created for Hills Bathroom Renovations mainly using @react-three/fiber, @react-three/drei, @react-spring and three.js
 
 ## Running the Project Locally
 
