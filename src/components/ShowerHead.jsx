@@ -6,7 +6,7 @@ import useDeviceDetect from "./hooks/useDeviceDetect";
 export default function ShowerHead() {
   // Loading 3D models + setting ref
   const showerHeadRef = useRef();
-  const showerHead = useGLTF("/models/shower-head.glb");
+  const showerHead = useGLTF("/models/shower-head-draco.glb");
 
   // Setting varibles based on device type (different for mobile compared to desktop/widescreen)
   const { isMobile } = useDeviceDetect();
