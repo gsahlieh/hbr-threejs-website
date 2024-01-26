@@ -65,6 +65,8 @@ function Model() {
     if (scrollOffset >= 0.1) {
       if (!muted) {
         waterSoundEffect.play();
+      } else {
+        waterSoundEffect.pause();
       }
     } else {
       waterSoundEffect.pause();
