@@ -24,7 +24,7 @@ function Model() {
   const group = useRef();
   const waterStreamRef = useRef();
   const model = useGLTF("/models/bathroom-scene-draco.glb");
-  const waterStream = useGLTF("/models/water-stream.glb");
+  const waterStream = useGLTF("/models/water-stream-draco.glb");
 
   // For scroll tracking + animations
   const tl = useRef();

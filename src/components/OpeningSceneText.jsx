@@ -88,7 +88,7 @@ export default function OpeningSceneText() {
         color={fillColor}
         outlineColor={outlineColor}
         fillOpacity={0}
-        font="/fonts/roboto-v30-latin-900.woff"
+        font="/fonts/roboto-900.woff"
         fontWeight="bold"
         outlineBlur={0.05}
         fontSize={behindFontSize}
@@ -104,7 +104,7 @@ export default function OpeningSceneText() {
         opacity={0}
         outlineColor={outlineColor}
         color="rgba(255, 1, 255, 1)"
-        font="/fonts/roboto-v30-latin-900.woff"
+        font="/fonts/roboto-900.woff"
         fontWeight="bold"
         fontSize={behindFontSize}
         textAlign={"center"}
@@ -120,7 +120,7 @@ export default function OpeningSceneText() {
           fillOpacity={0}
           strokeColor={outlineColor}
           strokeWidth={0.01}
-          font="/fonts/roboto-v30-latin-900.woff"
+          font="/fonts/roboto-900.woff"
           fontWeight="bold"
           fontSize={frontFontSize}
           textAlign={"center"}
