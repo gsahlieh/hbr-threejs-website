@@ -71,7 +71,6 @@ function Model() {
     } else {
       waterSoundEffect.pause();
     }
-
     waterStreamRef.current.visible = scrollOffset >= 0.1;
   }, [scrollOffset, muted]);
 
