@@ -132,7 +132,7 @@ export default function HtmlElements() {
         {/* Reviews */}
         {/* Contact */}
         <div
-          className={`absolute flex flex-col top-[600vh] ${
+          className={`absolute flex flex-col top-[597vh] ${
             isWideScreen ? "md:top-[720vh]" : "md:top-[710vh]"
           } w-full px-8`}
         >

@@ -23,13 +23,13 @@ extend(geometry);
 
 // Audio
 const waterSoundEffect = new Audio("./audio/water-running-60s.mp3");
-waterSoundEffect.volume = 0.5;
+waterSoundEffect.volume = 0.2;
 waterSoundEffect.loop = true;
 
 export default function BathroomScene() {
   return (
     <>
-      <Model position={[0, -5.5, 3]} rotation={[0, -0.2, 0]} />
+      <Model />
     </>
   );
 }
@@ -234,9 +234,8 @@ function Model(props) {
       ref={group}
       // position={groupPosition}
       // rotation={groupRotation}
-      position={[0, 0, 0]}
-      rotation={[0, 0, 0]}
-      {...props}
+      position={[-10, -5.5, 3]}
+      rotation={[0, -0.2, 0]}
       onClick={() => console.log(scroll)}
     >
       <Suspense

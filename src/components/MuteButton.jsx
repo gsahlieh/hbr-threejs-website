@@ -39,11 +39,11 @@ export default function MuteButton() {
   return (
     <div>
       <button className="mute-button" onClick={toggleMute}>
-        <div className="absolute top-24 right-8">
+        <div className="absolute md:top-24 md:right-8 top-20  -right-1">
           {muted ? (
-            <FaVolumeMute className="w-8 h-8" />
+            <FaVolumeMute className="md:w-8 md:h-8 w-5 h-5" />
           ) : (
-            <FaVolumeUp className="w-8 h-8" />
+            <FaVolumeUp className="md:w-8 md:h-8 w-5 h-5" />
           )}
         </div>
       </button>

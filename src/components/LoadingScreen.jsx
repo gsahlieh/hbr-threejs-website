@@ -62,8 +62,10 @@ export default function LoadingScreen() {
         </svg>
         <div className="box cursor-pointer" onClick={handleButtonClick}>
           <div className="percent">
-            <div className="percentNum select-none" id="count">
-              {progressValue < 100 ? Math.floor(progressValue) + "%" : "Start"}
+            <div className="percentNum select-none text-5xl " id="count">
+              {progressValue < 100
+                ? Math.floor(progressValue) + "%"
+                : "Explore"}
             </div>
           </div>
           <div id="water" className="water">
