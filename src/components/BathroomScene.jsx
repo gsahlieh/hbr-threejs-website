@@ -7,7 +7,7 @@ import Laptop from "./Laptop";
 import useDeviceDetect from "./hooks/useDeviceDetect";
 
 // Water Audio
-const waterSoundEffect = new Audio("./audio/water-running-60s.mp3");
+const waterSoundEffect = new Audio("./audio/water-running.mp3");
 waterSoundEffect.volume = 0.2;
 waterSoundEffect.loop = true;
 
